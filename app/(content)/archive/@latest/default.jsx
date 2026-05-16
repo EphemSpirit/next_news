@@ -1,8 +1,8 @@
 import NewsList from "@/components/headers/news/NewsList"
-import { getLatestNews } from "@/lib/news"
 
-const LatestNewsPage = () => {
-  const latestArticles = getLatestNews()
+const LatestNewsPage = async () => {
+  const res = await fetch("http://localhost:8080/news/latest")
+  const latestArticles = await res.json()
 
   return (
     <>

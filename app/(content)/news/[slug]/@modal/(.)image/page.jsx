@@ -1,11 +1,7 @@
-"use client";
-
+import ImageModal from "@/components/modals/ImageModal";
 import { notFound } from "next/navigation"
-import { useRouter } from "next/navigation"
 
 const InterceptedImagePage = async ({ params }) => {
-  const router = useRouter()
-
   const res = await fetch(`http://localhost:8080/news/${params.slug}`)
 
   const newsItem = await res.json()
@@ -14,13 +10,9 @@ const InterceptedImagePage = async ({ params }) => {
     notFound()
   }
 
-  const handleModalClose = () => {
-    router.back()
-  }
-
   return (
     <>
-      <div className="modal-backdrop" onClick={handleModalClose} />
+      <ImageModal />
       <dialog className="modal" open>
         <div className="fullscreen-image">
           <img src={`/images/news/${newsItem.image}`} alt={`${newsItem.title}`} />

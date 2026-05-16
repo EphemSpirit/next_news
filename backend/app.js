@@ -84,6 +84,11 @@ app.get('/news/:slug', (req, res) => {
   res.json(newsItem)
 })
 
+app.get('/news/latest', (req, res) => {
+  const newsItems = db.prepare("SELECT * FROM news ORDER BY date DESC LIMIT 3").all()
+  res.json(newsItems)
+})
+
 initDb();
 
 app.listen(8080);
