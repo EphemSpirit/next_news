@@ -1,17 +1,20 @@
 import NewsList from "@/components/headers/news/NewsList"
 import Link from "next/link"
-import { DUMMY_NEWS } from "@/dummy-news"
 import { getAvailableNewsMonths, getAvailableNewsYears, getNewsForYear, getNewsForYearAndMonth } from "@/lib/news"
 
-export default function FilteredNews({ params }) {
+export default async function FilteredNews({ params }) {
   const filter = params.filter
 
   const selectedYear = filter?.[0]
   const selectedMonth = filter?.[1]
 
+  const res = await fetch("http://localhost:8080/news")
+
+  const newsData = await res.json()
+
   let news;
 
-  let links = getAvailableNewsYears(DUMMY_NEWS)
+  let links = getAvailableNewsYears(newsData)
 
   if (selectedYear && !selectedMonth) {
     news = getNewsForYear(selectedYear)

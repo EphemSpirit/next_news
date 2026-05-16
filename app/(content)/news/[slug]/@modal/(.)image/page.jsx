@@ -1,16 +1,17 @@
 "use client";
 
-import { DUMMY_NEWS } from "@/dummy-news"
 import { notFound } from "next/navigation"
 import { useRouter } from "next/navigation"
 
-const InterceptedImagePage = ({ params }) => {
+const InterceptedImagePage = async ({ params }) => {
   const router = useRouter()
 
-  const newsItem = DUMMY_NEWS.find(item => item.slug === params.slug)
+  const res = await fetch(`http://localhost:8080/news/${params.slug}`)
+
+  const newsItem = await res.json()
 
   if (!newsItem) {
-    notFound
+    notFound()
   }
 
   const handleModalClose = () => {

@@ -79,6 +79,11 @@ app.get('/news', (req, res) => {
   res.json(news);
 });
 
+app.get('/news/:slug', (req, res) => {
+  const newsItem = db.prepare("SELECT * FROM news WHERE slug = ?").get(req.params.slug)
+  res.json(newsItem)
+})
+
 initDb();
 
 app.listen(8080);

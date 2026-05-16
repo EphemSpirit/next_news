@@ -1,9 +1,12 @@
-import { DUMMY_NEWS } from "@/dummy-news"
 import Link from "next/link"
 import { notFound } from "next/navigation"
 
-const NewsDetailPage = ({ params }) => {
-  const newsItem = DUMMY_NEWS.find(item => item.slug === params.slug)
+const NewsDetailPage = async ({ params }) => {
+  const res = await fetch(`http://localhost:8080/news/${params.slug}`)
+
+  console.log("RES: ", res)
+
+  const newsItem = await res.json()
 
   if (!newsItem) {
     notFound()
